@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROPOSTA - AZTECAS LAST DANCE</title>
+    <!-- Tailwind CSS CDN --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;700&family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Estilos personalizados */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* bg-gray-900 */
+            color: #d1d5db; /* text-gray-300 */
+        }
+        
+        /* Fonte personalizada para títulos */
+        .font-bebas {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1.5px;
+        }
+
+        /* Nova fonte para o título principal */
+        .font-sedgwick {
+            font-family: 'Sedgwick Ave Display', cursive;
+            letter-spacing: 2px;
+        }
+
+        /* Classe para animação de fade-in */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Linha laranja personalizada */
+        .divider {
+            height: 4px;
+            width: 100px;
+            background-color: #f97316; /* text-orange-500 */
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        /* Efeito de vidro na navbar */
+        .glass-nav {
+            background-color: rgba(17, 24, 39, 0.8); /* bg-gray-900 com 80% de opacidade */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(55, 65, 81, 0.5); /* border-gray-700 com 50% opacidade */
+        }
+
+        /* Estilo para o container responsivo do iframe */
+        .aspect-video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Proporção 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.5rem; /* rounded-lg */
+            margin-top: 1rem; /* mt-4 */
+        }
+
+        .aspect-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Estilos para o overlay final */
+        #finale-overlay {
+            /* Inicialmente invisível e não interativo */
+            opacity: 0;
+            pointer-events: none; 
+            transition: opacity 1.5s ease-in-out; /* Transição mais longa para o fade */
+            /* Removido cursor: pointer; pois não é mais clicável */
+        }
+        #finale-overlay.show-finale {
+             /* Visível quando a classe for adicionada */
+            opacity: 1;
+            /* pointer-events: auto; não é mais necessário */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- ========== HEADER (NAVBAR) ========== --><header class="glass-nav sticky top-0 z-50 w-full">
+        <nav class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex-shrink-0">
+                    <span class="font-bebas text-3xl font-bold text-orange-500">AZTECAS</span>
+                </div>
+                <div class="hidden md:block">
+                    <!-- Links da Navbar Corrigidos -->
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#introducao" class="text-gray-300 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Introdução</a>
+                        <a href="#lore" class="text-gray-300 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Nossa Lore</a>
+                        <a href="#objetivos" class="text-gray-300 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Objetivos</a>
+                        <a href="#identidade" class="text-gray-300 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Identidade</a>
+                        <a href="#hierarquia" class="text-gray-300 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Hierarquia</a>
+                        <a href="#requisitos" class="text-gray-300 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">MLO / Requisitos</a>
+                        <a href="#investimentos" class="text-gray-300 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Investimentos</a>
+                        <a href="#conclusao" class="text-gray-300 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Conclusão</a>
+                    </div>
+                </div>
+                <!-- Botão de Menu Mobile --><div class="-mr-2 flex md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <span class="sr-only">Abrir menu principal</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Menu Mobile Corrigido --><div class="md:hidden hidden" id="mobile-menu">
+            <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
+                <a href="#introducao" class="text-gray-300 hover:text-orange-500 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">Introdução</a>
+                <a href="#lore" class="text-gray-300 hover:text-orange-500 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">Nossa Lore</a>
+                <a href="#objetivos" class="text-gray-300 hover:text-orange-500 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">Objetivos</a>
+                <a href="#identidade" class="text-gray-300 hover:text-orange-500 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">Identidade</a>
+                <a href="#hierarquia" class="text-gray-300 hover:text-orange-500 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">Hierarquia</a>
+                <a href="#requisitos" class="text-gray-300 hover:text-orange-500 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">MLO / Requisitos</a>
+                <a href="#investimentos" class="text-gray-300 hover:text-orange-500 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">Investimentos</a> {/* Comentário removido */}
+                <a href="#conclusao" class="text-gray-300 hover:text-orange-500 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">Conclusão</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== --><main>
+
+        <!-- ========== HERO SECTION ========== --><section id="hero" class="relative h-[60vh] min-h-[400px] flex items-center justify-center text-center text-white overflow-hidden">
+            <!-- Imagem de fundo ATUALIZADA --><img 
+                src="https://forum-cfx-re.akamaized.net/original/5X/e/5/0/f/e50fe5b0cbfeb9b1c70ef5dd0575af424ce6556f.jpeg" 
+                alt="Imagem da gangue Aztecas Last Dance" 
+                class="absolute inset-0 w-full h-full object-cover opacity-30"
+                onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/111827/f97316?text=Imagem+Indispon%C3%ADvel';"
+            >
+            <!-- Overlay escuro --><div class="absolute inset-0 bg-gray-900 opacity-50"></div>
+            
+            <div class="relative z-10 p-4">
+                <h1 class="font-sedgwick text-6xl md:text-8xl font-extrabold text-orange-500 drop-shadow-lg">
+                    AZTECAS LAST DANCE
+                </h1>
+                <p class="mt-4 text-xl md:text-2xl font-light text-gray-200 drop-shadow-md">
+                    Proposta de Projeto para Cidade dos Anjos - 2025
+                </p>
+            </div>
+        </section>
+
+        <!-- Container principal para o conteúdo --><div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+            
+            <!-- ========== 2. INTRODUÇÃO ========== --><section id="introducao" class="fade-in-section text-center">
+                <h2 class="font-bebas text-5xl font-semibold text-white">Introdução: A Última Dança</h2>
+                <div class="divider"></div>
+                <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                    O projeto "Aztecas Last Dance" visa reintroduzir uma facção de rua com identidade cultural forte, enraizada no RP de estilo Chicano. O nome simboliza nosso conceito central: somos um grupo de amigos veteranos, reunidos para uma última jornada para reerguer o legado dos 'Aztecas'.
+                </p>
+                <p class="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                    Mais do que uma gangue, seremos uma "família" construída sobre códigos de lealdade, honra e sobrevivência. Nosso RP será centrado na recuperação de território, na proteção do nosso barrio e na construção de uma narrativa coesa de ascensão, estabelecendo negócios lícitos e ilícitos para financiar nossos objetivos.
+                </p>
+            </section>
+
+            <!-- ========== 3. LORE DO PROJETO ========== --><section id="lore" class="fade-in-section mt-24">
+                <h2 class="font-bebas text-5xl font-semibold text-white text-center">Lore do Projeto</h2>
+                <div class="divider"></div>
+                
+                <div class="relative mt-12 pl-6 border-l-4 border-orange-500 space-y-12">
+                    <!-- 3.1 O Passado --><div class="relative fade-in-section">
+                        <span class="absolute -left-[1.65rem] top-1 flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 ring-4 ring-orange-500">
+                            <svg class="h-6 w-6 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                        <h3 class="font-bebas text-3xl font-medium text-orange-500 ml-10">1. O Passado: A Era do Respeito e do Ferro</h3>
+                        <p class="mt-2 text-gray-300 ml-10 leading-relaxed">Houve um tempo em que Los Aztecas era um nome que impunha respeito. Sob o comando de Dimas Sodinofy e Nikaia Galanis, nós éramos mais do que uma gangue; éramos uma necessidade. Enquanto outros empurravam drogas baratas em esquinas, nós controlamos o mercado de ferro e proteção. Nosso primeiro império foi construído sobre duas fundações: o desmanche, onde carros entravam inteiros e saíam como peças fantasmas, e o tráfico de coletes. Em uma cidade onde tiroteios eram tão comuns quanto o nascer do sol, nós vendíamos sobrevivência. Nós éramos os reis discretos do submundo, protegendo nosso território e nossos negócios com uma honra que hoje não existe mais.</p>
+                    </div>
+
+                    <!-- 3.2 A Queda --><div class="relative fade-in-section">
+                        <span class="absolute -left-[1.65rem] top-1 flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 ring-4 ring-orange-500">
+                            <svg class="h-6 w-6 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6L9 12.75l4.286-4.286a11.948 11.948 0 014.306 6.43l.776 2.898m0 0l3.182-5.511m-3.182 5.51l-5.511-3.182m5.511 3.182L2.25 6z" />
+                            </svg>
+                        </span>
+                        <h3 class="font-bebas text-3xl font-medium text-orange-500 ml-10">2. A Queda: A Ferrugem e a Fusão</h3>
+                        <p class="mt-2 text-gray-300 ml-10 leading-relaxed">Mas impérios caem. O tempo, como a ferrugem, corrói até o metal mais forte. A lealdade começou a vacilar. Membros saíram, buscando vidas mais fáceis ou glória mais rápida. O nome "Aztecas" começou a perder peso. Em um esforço final para sobreviver, o que restou de nós se fundiu aos Families. Foi um ato de necessidade, mas para os fundadores, foi uma rendição. Vendo o legado se dissolver em outra bandeira, Dimas e Nikaia se retiraram. O nome Azteca foi arquivado, e a liderança passou de mão em mão, como uma coroa amaldiçoada que ninguém conseguia segurar.</p>
+                    </div>
+
+                    <!-- 3.3 O Fim Trágico --><div class="relative fade-in-section">
+                        <span class="absolute -left-[1.65rem] top-1 flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 ring-4 ring-orange-500">
+                            <svg class="h-6 w-6 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                            </svg>
+                        </span>
+                        <h3 class="font-bebas text-3xl font-medium text-orange-500 ml-10">3. O Fim Trágico: RUA2 e o Exílio</h3>
+                        <p class="mt-2 text-gray-300 ml-10 leading-relaxed">Anos depois, Dimas e Nikaia tentaram mais uma vez. Um novo nome, "RUA2". Mas o tempo havia mudado. A cidade estava mais cruel, as regras eram outras. A tentativa de retorno não foi uma ascensão; foi um incêndio. Terminou em desastre, sangue e, para Dimas, uma fuga desesperada. Ele cruzou a fronteira para o Paraguai, não como um rei, mas como um devedor, um homem caçado. Lá, longe de casa, ele cometeu o erro final: arrumou uma briga grande, uma dívida que só poderia ser paga com a própria vida. O nome Azteca não era mais nem um fantasma; era uma piada.</p>
+                    </div>
+                    
+                    <!-- 3.4 O Resgate --><div class="relative fade-in-section">
+                        <span class="absolute -left-[1.65rem] top-1 flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 ring-4 ring-orange-500">
+                            <svg class="h-6 w-6 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.624L16.5 21.75l-.398-1.126a3.375 3.375 0 00-2.456-2.456L12.75 18l1.126-.398a3.375 3.375 0 002.456-2.456L16.5 14.25l.398 1.126a3.375 3.375 0 002.456 2.456L20.25 18l-1.126.398a3.375 3.375 0 00-2.456 2.456z" />
+                            </svg>
+                        </span>
+                        <h3 class="font-bebas text-3xl font-medium text-orange-500 ml-10">4. O Resgate: O Juramento da "Last Dance"</h3>
+                        <div class="mt-2 text-gray-300 ml-10 space-y-4 leading-relaxed">
+                            <p>É aqui que a nossa história começa. A notícia da dívida de Dimas chegou aos nossos ouvidos nós, o "atual elenco". Derek Nikolaev, Apolo Aldrin e Tony Pierre, o filho da própria Nikaia.</p>
+                            <p>Para nós, aquilo não era a dívida de um velho. Era uma mancha na nossa história. Era a nossa família.</p>
+                            <p>Nós fomos até lá. Cruzamos a fronteira, mergulhamos no inferno que Dimas havia criado e o arrancamos de lá. Nós o resgatamos.</p>
+                            <p>Mas o resgate não foi o fim da missão. Foi o começo.</p>
+                            <p>Hoje, estamos de volta à Cidade dos Anjos. Não somos recrutas; somos veteranos cobrando o que é nosso. Trouxemos Dimas de volta, e ele está sob nossa proteção. Qualquer um que tentar cobrar a dívida dele, terá que falar conosco primeiro.</p>
+                            <p>Nós fundamos os "Aztecas" novamente, não apenas para proteger um homem, mas para resgatar um legado. A cidade esqueceu quem nós éramos. Ela esqueceu o respeito que esse nome carregava.</p>
+                            <p>Nossa missão é simples: garantir que todos se lembrem. Esta é a nossa Última Dança.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Imagem da Lore ATUALIZADA --><img 
+                    src="https://forum-cfx-re.akamaized.net/original/5X/5/6/c/a/56ca6b1ecffd6a2e25c8d9ba6e37971bc7b9b046.jpeg" 
+                    alt="Imagem do barrio dos Aztecas" 
+                    class="fade-in-section mt-16 rounded-lg shadow-xl object-cover w-full"
+                    onerror="this.onerror=null; this.src='https://placehold.co/1200x600/111827/f97316?text=Imagem+Indispon%C3%ADvel';"
+                >
+            </section>
+
+            <!-- ========== 4. OBJETIVOS E PROPÓSITO ========== --><section id="objetivos" class="fade-in-section mt-24">
+                <h2 class="font-bebas text-5xl font-semibold text-white text-center">Objetivos e Propósito</h2>
+                <div class="divider"></div>
+
+                <!-- Propósito Central --><div class="mt-12 bg-gray-800/50 p-8 rounded-lg border border-gray-700 shadow-lg text-center fade-in-section">
+                    <h3 class="font-bebas text-4xl font-medium text-orange-500">A. Propósito Central (A Missão)</h3>
+                    <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">Temos dois pilares inegociáveis que definem nosso propósito:</p>
+                    
+                    <!-- Grid para os dois pilares --><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 text-left">
+                        <!-- Card 1: Proteção --><div class="bg-gray-800 p-6 rounded-lg border border-gray-700/50 transform hover:border-orange-500/50 transition-all duration-300">
+                            <div class="flex items-center">
+                                <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.602-3.751m-.228-1.141A11.959 11.959 0 0012 2.25c-2.882 0-5.591.95-7.778 2.522" />
+                                </svg>
+                                <h5 class="font-bebas text-2xl text-white ml-3">1. A Proteção da Família</h5>
+                            </div>
+                            <p class="mt-2 text-gray-300 text-sm ml-11 leading-relaxed">Assegurar a vida de Dimas Sodinofy. Sua dívida agora é nossa e qualquer ameaça a ele é uma ameaça a todos.</p>
+                        </div>
+                        <!-- Card 2: Restauração --><div class="bg-gray-800 p-6 rounded-lg border border-gray-700/50 transform hover:border-orange-500/50 transition-all duration-300">
+                            <div class="flex items-center">
+                                <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                </svg>
+                                <h5 class="font-bebas text-2xl text-white ml-3">2. A Restauração do Nome</h5>
+                            </div>
+                            <p class="mt-2 text-gray-300 text-sm ml-11 leading-relaxed">Limpar o nome "Aztecas" e reerguê-lo, fazendo-o voltar a ser sinônimo de respeito, honra e controle.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Objetivos Curto, Médio, Longo Prazo - ATUALIZADOS COM ÍCONES --><div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Curto Prazo --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700/50 fade-in-section" style="transition-delay: 100ms;">
+                        <!-- Ícone e Título B --><div class="flex items-center">
+                            <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                            </svg>
+                            <h4 class="font-bebas text-3xl font-medium text-orange-500 ml-3">B. Curto Prazo (Sobrevivência)</h4>
+                        </div>
+                        <!-- Lista B (com indentação) --><ul class="mt-4 list-disc list-inside space-y-2 text-gray-300 ml-11 leading-relaxed">
+                            <li>Estabelecer e proteger o Barrio (Hood).</li>
+                            <li>Levantar inteligência sobre as ameaças a Dimas.</li>
+                            <li>Capitalização rápida (foco inicial no desmanche).</li>
+                            <li>Reapresentar-nos às organizações da cidade.</li>
+                        </ul>
+                    </div>
+                    <!-- Médio Prazo --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700/50 fade-in-section" style="transition-delay: 200ms;">
+                        <!-- Ícone e Título C --><div class="flex items-center">
+                            <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                               <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.83-5.83M11.42 15.17L14.49 12.1M11.42 15.17l-1.49.01M14.49 12.1L11.42 15.17M14.49 12.1l2.07-2.07c.25-.25.25-.65 0-.9l-.43-.43c-.25-.25-.65-.25-.9 0l-2.07 2.07M14.49 12.1L12.42 14.17M4.5 19.5h15" />
+                            </svg>
+                            <h4 class="font-bebas text-3xl font-medium text-orange-500 ml-3">C. Médio Prazo (Restauração)</h4>
+                        </div>
+                        <!-- Lista C (com indentação) --><ul class="mt-4 list-disc list-inside space-y-2 text-gray-300 ml-11 leading-relaxed">
+                            <li>"Pagar" a dívida de Dimas (diplomacia, dinheiro ou chumbo).</li>
+                        </ul>
+                    </div>
+                    <!-- Longo Prazo --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700/50 fade-in-section" style="transition-delay: 300ms;">
+                        <!-- Ícone e Título D --><div class="flex items-center">
+                            <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                               <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9a2.25 2.25 0 00-2.25 2.25v.75A2.25 2.25 0 007.5 24h9a2.25 2.25 0 002.25-2.25v-.75a2.25 2.25 0 00-2.25-2.25zM16.5 18.75V5.625c0-1.036-.84-1.875-1.875-1.875h-5.25C8.34 3.75 7.5 4.59 7.5 5.625v13.125" />
+                            </svg>
+                            <h4 class="font-bebas text-3xl font-medium text-orange-500 ml-3">D. Longo Prazo (O Legado)</h4>
+                        </div>
+                        <!-- Lista D (com indentação) --><ul class="mt-4 list-disc list-inside space-y-2 text-gray-300 ml-11 leading-relaxed">
+                            <li>Autossuficiência e prosperidade do barrio.</li>
+                            <li>Ser a organização mais respeitada (palavra firme, lealdade).</li>
+                            <li>Concluir a "Last Dance" com glória, não tragédia.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- NOSSAS OPERAÇÕES (Sem alteração) --><div class="mt-16 fade-in-section">
+                    <h3 class="font-bebas text-4xl font-medium text-orange-500 text-center">Nossas Operações (Lícito e Ilícito)</h3>
+                    <p class="text-center text-gray-400 mt-2">Nosso foco é claro e fundamentado na nossa história.</p>
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Card 1: Fachada Lícita --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700/50 fade-in-section" style="transition-delay: 100ms;">
+                            <div class="flex justify-center mb-3">
+                                <svg class="h-10 w-10 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5c0-.933.7-1.75 1.683-1.75h.634c.983 0 1.683.7 1.683 1.75v7.5c0 .933-.7 1.75-1.683 1.75h-.634C14.2 22.75 13.5 22 13.5 21zM5.25 3v18c0 1.657 1.343 3 3 3h9c1.657 0 3-1.343 3-3V3c0-1.657-1.343-3-3-3h-9c-1.657 0-3 1.343-3 3z" />
+                                </svg>
+                            </div>
+                            <h4 class="font-bebas text-3xl font-medium text-white text-center">Fachada Lícita</h4>
+                            <p class="text-center text-orange-400 font-semibold">(Oficina / Restaurante)</p>
+                            <p class="mt-3 text-gray-300 text-sm text-center leading-relaxed">Propósito: Gerar RP de barrio, organizar encontros de Lowriders e lavar o dinheiro das operações.</p>
+                        </div>
+                        <!-- Card 2: Ilícito "Ferro" --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700/50 fade-in-section" style="transition-delay: 200ms;">
+                            <div class="flex justify-center mb-3">
+                                <svg class="h-10 w-10 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.83-5.83M11.42 15.17L14.49 12.1M11.42 15.17l-1.49.01M14.49 12.1L11.42 15.17M14.49 12.1l2.07-2.07c.25-.25.25-.65 0-.9l-.43-.43c-.25-.25-.65-.25-.9 0l-2.07 2.07M14.49 12.1L12.42 14.17M4.5 19.5h15" />
+                                </svg>
+                            </div>
+                            <h4 class="font-bebas text-3xl font-medium text-white text-center">Ilícito: "A Pólvora"</h4>
+                            <p class="text-center text-orange-400 font-semibold">(Mercado de Munições)</p>
+                            <p class="mt-3 text-gray-300 text-sm text-center leading-relaxed">Vender guerra e poder. Foco em fabricação de munições e encomendas, um nicho essencial na cidade.</p>
+                        </div>
+                        <!-- Card 3: Ilícito "Proteção" --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700/50 fade-in-section" style="transition-delay: 300ms;">
+                            <div class="flex justify-center mb-3">
+                                <svg class="h-10 w-10 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <h4 class="font-bebas text-3xl font-medium text-white text-center">Ilícito: "A Proteção"</h4>
+                            <p class="text-center text-orange-400 font-semibold">(Mercado de Coletes)</p>
+                            <p class="mt-3 text-gray-300 text-sm text-center leading-relaxed">Vender sobrevivência. Controlar o mercado de proteção balística, um nicho essencial na cidade.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Foco no RP - TÍTULO ALTERADO E ÍCONE ADICIONADO --><div class="mt-16 bg-gradient-to-r from-orange-500/10 to-gray-800/50 p-8 rounded-lg border border-orange-500/50 shadow-lg text-center fade-in-section">
+                    <!-- Ícone E (Compromisso) --><div class="flex justify-center mb-3">
+                        <svg class="h-10 w-10 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12" />
+                        </svg>
+                    </div>
+                    <h3 class="font-bebas text-4xl font-medium text-orange-500">E. Nosso Compromisso com a Narrativa</h3>
+                    <p class="mt-4 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                        Nosso foco principal será sempre a narrativa. Somos veteranos; nosso RP será focado na estratégia, no diálogo e na tensão. Prometemos gerar RP de barrio autêntico, tratando conflitos como arcos de história com consequências reais, onde "perder" pode ser tão importante quanto "ganhar".
+                    </p>
+                </div>
+            </section>
+            
+            <!-- ========== 5. IDENTIDADE VISUAL ========== --><section id="identidade" class="fade-in-section mt-24">
+                <h2 class="font-bebas text-5xl font-semibold text-white text-center">Identidade Visual</h2>
+                <div class="divider"></div>
+                
+                <!-- Parágrafo introdutório adicionado --><p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto text-center leading-relaxed">
+                    Nossa identidade visual é um pilar fundamental do nosso RP, refletindo a cultura Chicana e o legado Azteca. Nosso objetivo não é um "uniforme", mas um estilo que nos torna reconhecíveis.
+                </p>
+
+                <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <!-- Coluna da Esquerda: Mini Galeria de Imagens ATUALIZADAS --><div class="fade-in-section grid grid-cols-1 gap-6">
+                        <!-- Imagem 1: Grupo ATUALIZADA --><img 
+                            src="https://i.ibb.co/Q30jzq6c/unnamed.jpg" 
+                            alt="Estilo visual dos Aztecas em grupo" 
+                            class="rounded-lg shadow-xl object-cover w-full h-full"
+                            onerror="this.onerror=null; this.src='https://placehold.co/800x500/111827/f97316?text=Imagem+Indispon%C3%ADvel';"
+                        >
+                        <!-- Imagem 2: Lowrider ATUALIZADA --><img 
+                            src="https://forum-cfx-re.akamaized.net/original/5X/1/1/2/c/112c67922dd848ad6ae2d033773f20f176ae138f.jpeg" 
+                            alt="Lowrider customizado dos Aztecas" 
+                            class="rounded-lg shadow-xl object-cover w-full h-full"
+                            onerror="this.onerror=null; this.src='https://placehold.co/800x500/111827/f97316?text=Imagem+Indispon%C3%ADvel';"
+                        >
+                    </div>
+                    
+                    <!-- Coluna da Direita: Descrições com Ícones --><div class="space-y-8 fade-in-section" style="transition-delay: 200ms;">
+                        <!-- Cores --><div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-8 w-8 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.385m0 0a3 3 0 003.636 2.121 2.25 2.25 0 012.4 2.245 4.5 4.5 0 008.4 2.245c0-.399-.078-.78-.22-1.128m0 0a15.998 15.998 0 00-3.388-1.62m-5.043-.025a15.994 15.994 0 01-1.622-3.385m0 0a3 3 0 00-3.636-2.121 2.25 2.25 0 01-2.4-2.245 4.5 4.5 0 00-8.4-2.245c0 .399.078.78.22 1.128m0 0a15.998 15.998 0 003.388 1.62m5.043.025a15.994 15.994 0 011.622 3.385" />
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-bebas text-3xl font-medium text-orange-500">Cores: O Legado Laranja</h4>
+                                <p class="mt-2 text-gray-300 leading-relaxed">Nossa cor primária é o <span class="text-orange-500 font-bold">Laranja</span>, uma homenagem ao legado. Usada com moderação (bandanas, detalhes) e combinada com neutros: Branco, Preto e Cinza.</p>
+                            </div>
+                        </div>
+                        <!-- Vestimentas --><div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-8 w-8 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m0 0h3.75m-3.75 0H8.25m9.75 0a2.25 2.25 0 012.25 2.25M13.5 12a2.25 2.25 0 012.25 2.25m0 0a2.25 2.25 0 002.25 2.25M15.75 12a2.25 2.25 0 00-2.25 2.25m0 0a2.25 2.25 0 01-2.25 2.25m-2.25 0a2.25 2.25 0 00-2.25-2.25m0 0A2.25 2.25 0 018.25 12m0 0a2.25 2.25 0 00-2.25 2.25m-2.25 0a2.25 2.25 0 01-2.25-2.25m0 0a2.25 2.25 0 00-2.25-2.25M6 12a2.25 2.25 0 01-2.25-2.25m0 0a2.25 2.25 0 00-2.25-2.25m2.25 2.25A2.25 2.25 0 006 9.75M8.25 12a2.25 2.25 0 00-2.25-2.25M12 12a2.25 2.25 0 01-2.25-2.25M13.5 12a2.25 2.25 0 002.25-2.25M15.75 12a2.25 2.25 0 012.25-2.25m0 0a2.25 2.25 0 002.25-2.25m2.25 2.25a2.25 2.25 0 012.25-2.25M18 12a2.25 2.25 0 002.25-2.25M20.25 12A2.25 2.25 0 0018 9.75" />
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-bebas text-3xl font-medium text-orange-500">Vestimentas: Estilo Chicano</h4>
+                                <ul class="mt-2 list-disc list-inside space-y-1 text-gray-300 leading-relaxed">
+                                    <li><strong>Cabeça:</strong> Bandanas (laranja), bonés de aba reta, chapéus (Fedora).</li>
+                                    <li><strong>Torso:</strong> Regatas brancas, camisas de flanela, camisetas largas, jaquetas (Dickies).</li>
+                                    <li><strong>Pernas:</strong> Calças largas (Chino, Dickies), baggys, jeans escuros.</li>
+                                    <li><strong>Calçados:</strong> Tênis clássicos (Cortez, Vans), meias brancas altas.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Veículos --><div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-8 w-8 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5h14.625M5.625 18.75a1.5 1.5 0 01-3 0m3 0H3.375m0 0a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5v-4.5m0 4.5c0 .621.504 1.125 1.125 1.125H6.75m0 0H21m-16.5 0H6.75m0 0H21m-16.5 0H6.75M3.375 14.25v-3.375c0-1.381 1.119-2.5 2.5-2.5h12.25c1.381 0 2.5 1.119 2.5 2.5v3.375M3.375 14.25h17.25M6 18v-1.5m12 1.5v-1.5" />
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-bebas text-3xl font-medium text-orange-500">Veículos: Cultura Lowrider & Classic</h4>
+                                <p class="mt-2 text-gray-300 leading-relaxed">Nossa frota reflete nossa identidade. Preferimos Lowriders (Voodoo, Manana, Peyote), Muscle Cars Antigos (Sabre Turbo, Buccaneer) e Sedans Clássicos, mantendo a estética "velha guarda".</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== 6. HIERARQUIA ========== --><section id="hierarquia" class="fade-in-section mt-24">
+                <h2 class="font-bebas text-5xl font-semibold text-white text-center">Hierarquia da Família</h2>
+                <div class="divider"></div>
+                <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto text-center leading-relaxed">
+                    Nossa estrutura não é uma ditadura, é uma família de veteranos construída sobre o respeito e a responsabilidade.
+                </p>
+                
+                <!-- Nível 1: El Consejo --><div class="mt-12 fade-in-section">
+                    <h3 class="font-bebas text-4xl font-medium text-orange-500 text-center">Nível 1: El Consejo (O Conselho da Última Dança)</h3>
+                    <p class="text-center text-gray-400">O quarteto estratégico que lidera o retorno e toma as decisões finais.</p>
+                    
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Card 01 --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 hover:border-orange-500 transition-all duration-300 transform hover:-translate-y-1">
+                            <span class="font-bebas text-4xl text-orange-500">01</span>
+                            <h5 class="font-bebas text-2xl text-white mt-1">El Patrón (O Cérebro)</h5>
+                            <p class="text-lg font-semibold text-gray-300">Derek Nikolaev</p>
+                            <p class="mt-2 text-gray-400 text-sm leading-relaxed">A voz final e o estrategista-chefe. Define a visão, conduz a diplomacia e toma as decisões de alto risco.</p>
+                        </div>
+                        <!-- Card 02 --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 hover:border-orange-500 transition-all duration-300 transform hover:-translate-y-1">
+                            <span class="font-bebas text-4xl text-orange-500">02</span>
+                            <h5 class="font-bebas text-2xl text-white mt-1">Brazo Derecho (O Gerente)</h5>
+                            <p class="text-lg font-semibold text-gray-300">Tony Pierre</p>
+                            <p class="mt-2 text-gray-400 text-sm leading-relaxed">O segundo em comando. Cuida das finanças, administra os negócios (lícitos e ilícitos) e garante o funcionamento do barrio.</p>
+                        </div>
+                        <!-- Card 03 --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 hover:border-orange-500 transition-all duration-300 transform hover:-translate-y-1">
+                            <span class="font-bebas text-4xl text-orange-500">03</span>
+                            <h5 class="font-bebas text-2xl text-white mt-1">Capitán de Guerra (O Executor)</h5>
+                            <p class="text-lg font-semibold text-gray-300">Apolo Aldrin</p>
+                            <p class="mt-2 text-gray-400 text-sm leading-relaxed">O chefe tático e da segurança. Responsável pelo arsenal, treinamento e, acima de tudo, pela segurança de Dimas Sodinofy.</p>
+                        </div>
+                        <!-- Card 04 --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 hover:border-orange-500 transition-all duration-300 transform hover:-translate-y-1">
+                            <span class="font-bebas text-4xl text-orange-500">04</span>
+                            <h5 class="font-bebas text-2xl text-white mt-1">Jefe de Calle (Chefe da Rua)</h5>
+                            <p class="text-lg font-semibold text-gray-300">Ricardo Bertolini</p>
+                            <p class="mt-2 text-gray-400 text-sm leading-relaxed">O líder de campo. Comanda os membros na rua, domina o território e garante que as ordens sejam executadas com disciplina.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ORDEM LÓGICA CORRIGIDA: Nível 2 e 3 --><div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Nível 2: Los Veteranos (MOVIDO PARA CÁ) --><div class="bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 fade-in-section md:col-span-2">
+                        <!-- Ícone Adicionado --><div class="flex items-center mb-3">
+                             <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 00-12.728 0M18 18.72a9.094 9.094 0 01-12.728 0M12 3v9.75m0 0a3.75 3.75 0 01-3.75 3.75H8.25m3.75 0a3.75 3.75 0 003.75-3.75H12m0 0V3m0 0a3 3 0 00-3 3v.75m3-3.75a3 3 0 013 3v.75M6.75 12H6a2.25 2.25 0 00-2.25 2.25v.75M6.75 12a2.25 2.25 0 012.25-2.25h.75M9 15v.75a2.25 2.25 0 01-2.25 2.25H6m3-3.75V15m0 0v.75a2.25 2.25 0 002.25 2.25h.75M17.25 12h.75a2.25 2.25 0 012.25 2.25v.75M17.25 12a2.25 2.25 0 00-2.25-2.25h-.75M15 15v.75a2.25 2.25 0 002.25 2.25h.75M15 15v-3.75" />
+                            </svg>
+                            <h3 class="font-bebas text-3xl font-medium text-orange-500 ml-3">Nível 2: Los Veteranos (O Núcleo Fiel)</h3>
+                        </div>
+                        <p class="mt-2 text-gray-400 leading-relaxed">A espinha dorsal da família. Membros fundadores que executam as operações do dia-a-dia.</p>
+                        <!-- LISTA DE MEMBROS ATUALIZADA --><div class="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-1 text-gray-300 text-sm">
+                            <p>06 - John Paixão</p>
+                            <p>07 - Yori Sobek</p>
+                            <p>08 - Gabryel Sobek</p>
+                            <p>09 - João Bertolini</p>
+                            <p>10 - Junior Delluca</p>
+                            <p>11 - Davi Pierre</p>
+                            <p>12 - Logan Nikolaev</p>
+                            <p>13 - Matthew Blanc</p>
+                            <p>14 - Cirilu Poubel</p>
+                            <p>15 - Nikaia Gallanis</p>
+                            <p>16 - Fumaça</p>
+                            <p>17 - Miguel Leclerc</p>
+                            <p>18 - Eduardo Rayquaza</p>
+                            <p>19 - Gabriel Moralles</p>
+                            <p>20 - Marcelo Jordan</p>
+                            <p>21 - Junior Marques</p>
+                            <p>22 - Catarina Medin</p>
+                            <p>23 - Coringa</p>
+                            <p>24 - Reginaldo</p>
+                            <p>25 - Vaga Reservada</p>
+                            <p>26 - Vaga Reservada</p>
+                            <p>27 - Vaga Reservada</p>
+                        </div>
+                    </div>
+
+                    <!-- Nível 3: Posição de Honra (MOVIDO PARA CÁ) --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border-2 border-orange-500 fade-in-section md:col-span-1">
+                        <h3 class="font-bebas text-3xl font-medium text-orange-500">Nível 3: Posição de Honra</h3>
+                        <div class="mt-4">
+                            <span class="font-bebas text-4xl text-orange-400">05</span>
+                            <h5 class="font-bebas text-2xl text-white mt-1">El Padrino (O Conselheiro)</h5>
+                            <p class="text-lg font-semibold text-gray-300">Dimas Sodinofy</p>
+                            <p class="mt-2 text-gray-400 text-sm leading-relaxed">A causa. O co-fundador original. Atua como Padrinho e Conselheiro, detentor da sabedoria. Sua função é ser protegido e guiar o Conselho.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nível 4: Prospectos (BORDA TRACEJADA E ÍCONE ADICIONADOS) --><div class="mt-8 bg-gray-800/50 p-6 rounded-lg shadow-lg border border-dashed border-gray-600 fade-in-section">
+                    <!-- Ícone Adicionado --><div class="flex items-center mb-3">
+                         <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.5 21h-5A12.318 12.318 0 014 19.235z" />
+                        </svg>
+                        <h3 class="font-bebas text-3xl font-medium text-orange-500 ml-3">Nível 4: Prospectos (O Sangue Novo)</h3>
+                    </div>
+                    <p class="mt-2 text-gray-300 leading-relaxed">Nível de entrada para futuros membros recrutados in-game. Devem provar seu valor, aprender nossos códigos, mostrar lealdade absoluta e executar tarefas de menor escalão, demonstrando respeito pelos Veteranos.</p>
+                </div>
+            </section>
+
+            <!-- ========== 7. REQUISITOS TÉCNICOS (MLO) ========== --><section id="requisitos" class="fade-in-section mt-24">
+                <h2 class="font-bebas text-5xl font-semibold text-white text-center">Requisitos Técnicos (MLO / QG)</h2>
+                <div class="divider"></div>
+                <p class="mt-4 text-lg text-gray-300 max-w-4xl mx-auto text-center leading-relaxed">
+                    Para criar a imersão de um barrio e um QG seguro, um MLO dedicado é essencial. Abaixo estão as opções que consideramos, junto com as modificações necessárias. Confirmamos que, caso o projeto seja aprovado, o MLO escolhido será comprado por nós e doado à Cidade dos Anjos, cientes de que o valor não será reembolsado.
+                </p>
+                <!-- Grid para as 3 Opções de MLO - Estrutura interna reordenada --><!-- Classe lg:auto-rows-fr adicionada para igualar altura dos cards --><div class="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8 lg:auto-rows-fr">
+                    <!-- Opção 1: Florence District --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 fade-in-section flex flex-col">
+                        <h4 class="font-bebas text-3xl font-medium text-orange-500">Opção 1: Florence District</h4>
+                        
+                        <!-- 1. Modificações Solicitadas --><p class="mt-4 text-gray-400"><strong>Modificações Solicitadas:</strong></p>
+                        <ul class="mt-2 list-decimal list-inside text-gray-300 leading-relaxed">
+                            <li>Adicionar portão/grade na rua principal (sensação de "beco" controlado).</li>
+                            <li>Alterar um ponto da corrida.</li>
+                        </ul>
+
+                        <!-- 2. Player com o Vídeo --><p class="mt-6 text-gray-400 text-sm">(Prévia em Vídeo)</p>
+                        <div class="aspect-video-container">
+                            <!-- Link Atualizado --><iframe 
+                                src="https://www.youtube.com/embed/_AUiJP_XYSI" 
+                                title="YouTube video player - Florence District" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+
+                        <!-- 3. Subtítulo: Local no Mapa --><p class="mt-6 text-gray-400"><strong>Local no Mapa:</strong></p>
+
+                         <!-- 4. Imagem QG Opção 1 ATUALIZADA --><img 
+                            src="https://forum-cfx-re.akamaized.net/original/5X/1/7/2/5/1725c6a27ee1aa6488000d254b6346faf4b523a9.jpeg" 
+                            alt="Imagem do QG em Florence District" 
+                            class="mt-2 rounded-lg shadow-md w-full object-cover border border-gray-600"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/1f2937/4b5563?text=Erro+Imagem';"
+                        >
+                    </div>
+                    <!-- Opção 2: Aztecas Hood --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 fade-in-section flex flex-col" style="transition-delay: 150ms;">
+                        <h4 class="font-bebas text-3xl font-medium text-orange-500">Opção 2: Aztecas Hood</h4>
+                         
+                        <!-- 1. Modificações Solicitadas --><p class="mt-4 text-gray-400"><strong>Modificações Solicitadas:</strong></p>
+                        <ul class="mt-2 list-decimal list-inside text-gray-300 leading-relaxed">
+                            <li>Adicionar portão/grade na rua principal.</li>
+                            <li>Alterar pichações para refletir o nome "Aztecas" e nossos símbolos.</li>
+                        </ul>
+
+                         <!-- 2. Player com o Vídeo --><p class="mt-6 text-gray-400 text-sm">(Prévia em Vídeo)</p>
+                        <div class="aspect-video-container">
+                            <iframe 
+                                src="https://www.youtube.com/embed/gQS7_KZXo9M" 
+                                title="YouTube video player - Aztecas Hood" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        
+                         <!-- 3. Subtítulo: Local no Mapa --><p class="mt-6 text-gray-400"><strong>Local no Mapa:</strong></p>
+
+                         <!-- 4. Imagem QG Opção 2 ATUALIZADA --><img 
+                            src="https://i.ibb.co/nN4B09XP/Screenshot-1.png" 
+                            alt="Imagem do QG no Aztecas Hood" 
+                            class="mt-2 rounded-lg shadow-md w-full object-cover border border-gray-600"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/1f2937/4b5563?text=Erro+Imagem';"
+                        >
+                    </div>
+                    <!-- Opção 3: Barrio Del Este --><div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 fade-in-section flex flex-col" style="transition-delay: 300ms;">
+                        <h4 class="font-bebas text-3xl font-medium text-orange-500">Opção 3: Barrio Del Este</h4>
+                         
+                        <!-- 1. Modificações Solicitadas --><p class="mt-4 text-gray-400"><strong>Modificações Solicitadas:</strong></p>
+                        <ul class="mt-2 list-decimal list-inside text-gray-300 mb-4 leading-relaxed">
+                            <li>Adicionar portão/grade na rua principal.</li>
+                        </ul>
+
+                        <!-- 2. Player com o Vídeo --><p class="mt-6 text-gray-400 text-sm">(Prévia em Vídeo)</p>
+                        <div class="aspect-video-container">
+                            <iframe 
+                                src="https://www.youtube.com/embed/-44tcyjfBlQ" 
+                                title="YouTube video player - Barrio Del Este" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        
+                        <!-- 3. Subtítulo: Local no Mapa --><p class="mt-6 text-gray-400"><strong>Local no Mapa:</strong></p>
+
+                        <!-- 4. Imagem QG Opção 3 ATUALIZADA --><img 
+                            src="https://forum-cfx-re.akamaized.net/original/5X/5/6/c/a/56ca6b1ecffd6a2e25c8d9ba6e37971bc7b9b046.jpeg" 
+                            alt="Imagem do QG no Barrio Del Este" 
+                            class="mt-2 rounded-lg shadow-md w-full object-cover border border-gray-600"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/1f2937/4b5563?text=Erro+Imagem';"
+                        >
+                    </div>
+                </div>
+            </section>
+
+             <!-- ========== NOVA SEÇÃO: INVESTIMENTOS (VISUAL MELHORADO) ========== -->
+             <section id="investimentos" class="fade-in-section mt-24 text-center">
+                 <!-- Ícone Adicionado -->
+                 <div class="flex justify-center mb-3">
+                     <svg class="h-10 w-10 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                         <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+                     </svg>
+                 </div>
+                <h2 class="font-bebas text-5xl font-semibold text-white">Nosso Investimento no Projeto</h2>
+                <div class="divider"></div>
+                <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                    Estamos comprometidos em investir recursos significativos para garantir a qualidade e a imersão do RP dos Aztecas Last Dance:
+                </p>
+                <!-- Grid de Cards para Investimentos -->
+                 <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+                     <!-- Card 1: Cinematic Apresentação -->
+                     <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700/50 transform hover:border-orange-500/50 transition-all duration-300 fade-in-section flex flex-col">
+                         <div class="flex items-center mb-3">
+                             <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112zM15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>
+                             <h4 class="font-bebas text-2xl text-white ml-3">Cinematic de Apresentação</h4>
+                         </div>
+                         <p class="text-gray-300 text-sm leading-relaxed flex-grow">Produção audiovisual de alta qualidade para introduzir a facção à comunidade da cidade.</p> 
+                     </div>
+                     <!-- Card 2: Cinematic Lore -->
+                     <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700/50 transform hover:border-orange-500/50 transition-all duration-300 fade-in-section flex flex-col" style="transition-delay: 100ms;"> 
+                         <div class="flex items-center mb-3">
+                             <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+                             <h4 class="font-bebas text-2xl text-white ml-3">Cinematic da Lore</h4>
+                         </div>
+                         <p class="text-gray-300 text-sm leading-relaxed flex-grow">Vídeo dedicado a contar a história emocionante por trás do retorno dos Aztecas.</p>
+                     </div>
+                      <!-- Card 3: Narração Tayrk -->
+                     <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700/50 transform hover:border-orange-500/50 transition-all duration-300 fade-in-section flex flex-col" style="transition-delay: 200ms;"> 
+                         <div class="flex items-center mb-3">
+                              <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" /></svg>
+                             <h4 class="font-bebas text-2xl text-white ml-3">Narração Profissional</h4>
+                         </div>
+                         <p class="text-gray-300 text-sm leading-relaxed flex-grow">Contratação do renomado Tayrk para a narração, elevando o nível de imersão dos cinematics.</p> 
+                     </div>
+                      <!-- Card 4: Roupas Personalizadas -->
+                     <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700/50 transform hover:border-orange-500/50 transition-all duration-300 fade-in-section flex flex-col" style="transition-delay: 300ms;">
+                         <div class="flex items-center mb-3">
+                             <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m0 0h3.75m-3.75 0H8.25m9.75 0a2.25 2.25 0 012.25 2.25M13.5 12a2.25 2.25 0 012.25 2.25m0 0a2.25 2.25 0 002.25 2.25M15.75 12a2.25 2.25 0 00-2.25 2.25m0 0a2.25 2.25 0 01-2.25 2.25m-2.25 0a2.25 2.25 0 00-2.25-2.25m0 0A2.25 2.25 0 018.25 12m0 0a2.25 2.25 0 00-2.25 2.25m-2.25 0a2.25 2.25 0 01-2.25-2.25m0 0a2.25 2.25 0 00-2.25-2.25M6 12a2.25 2.25 0 01-2.25-2.25m0 0a2.25 2.25 0 00-2.25-2.25m2.25 2.25A2.25 2.25 0 006 9.75M8.25 12a2.25 2.25 0 00-2.25-2.25M12 12a2.25 2.25 0 01-2.25-2.25M13.5 12a2.25 2.25 0 002.25-2.25M15.75 12a2.25 2.25 0 012.25-2.25m0 0a2.25 2.25 0 002.25-2.25m2.25 2.25a2.25 2.25 0 012.25-2.25M18 12a2.25 2.25 0 002.25-2.25M20.25 12A2.25 2.25 0 0018 9.75" /></svg>
+                             <h4 class="font-bebas text-2xl text-white ml-3">Roupas Personalizadas</h4>
+                         </div>
+                         <p class="text-gray-300 text-sm leading-relaxed flex-grow">Desenvolvimento de vestimentas exclusivas que reflitam a identidade Chicana e as cores da facção.</p> 
+                     </div>
+                      <!-- Card 5: Skin de Arma -->
+                     <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700/50 transform hover:border-orange-500/50 transition-all duration-300 fade-in-section flex flex-col" style="transition-delay: 400ms;"> 
+                         <div class="flex items-center mb-3">
+                              <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5zM13.5 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5z" /></svg>
+                             <h4 class="font-bebas text-2xl text-white ml-3">Skin de Arma</h4>
+                         </div>
+                         <p class="text-gray-300 text-sm leading-relaxed flex-grow">Criação de uma skin de arma personalizada, reforçando a identidade visual única dos Aztecas.</p> 
+                     </div>
+                      <!-- Card 6: MLO -->
+                     <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700/50 transform hover:border-orange-500/50 transition-all duration-300 fade-in-section flex flex-col" style="transition-delay: 500ms;"> 
+                         <div class="flex items-center mb-3">
+                             <svg class="h-8 w-8 text-orange-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875v12.25c0 .426.241.815.622 1.006l4.875 2.437a1.875 1.875 0 001.006 0l4.875-2.437z" /></svg>
+                             <h4 class="font-bebas text-2xl text-white ml-3">Mapa (MLO)</h4>
+                         </div>
+                         <p class="text-gray-300 text-sm leading-relaxed flex-grow">Aquisição e doação de um mapa customizado (MLO) para servir como nosso autêntico barrio e QG.</p> 
+                     </div>
+                 </div>
+            </section>
+            
+            <!-- ========== 8. CONCLUSÃO ========== --><section id="conclusao" class="fade-in-section mt-24 text-center">
+                 <!-- Ícone Adicionado --><div class="flex justify-center mb-3">
+                     <svg class="h-10 w-10 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                       <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                     </svg>
+                 </div>
+                <h2 class="font-bebas text-5xl font-semibold text-white">Conclusão: A Promessa da Última Dança</h2>
+                <div class="divider"></div>
+                <p class="mt-4 text-lg text-gray-300 max-w-3xl mx-auto bg-gray-800/50 p-6 rounded-lg border border-gray-700 shadow-lg leading-relaxed">
+                    O "Aztecas Last Dance" é mais do que um projeto de facção; é um compromisso com a <span class="text-orange-400 font-semibold">narrativa</span>. Somos veteranos dedicados a trazer um RP maduro, estratégico e profundo, valorizando a interação, as consequências e a criação de histórias memoráveis acima de qualquer "vitória" mecânica.
+                </p>
+                <p class="mt-6 text-xl text-orange-500 font-semibold max-w-3xl mx-auto leading-relaxed">
+                    Nosso objetivo é claro: reerguer um legado através de uma jornada coesa de redenção e lealdade. Estamos prontos para a nossa Última Dança e agradecemos a vossa atenção.
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- ========== OVERLAY FINAL ========== -->
+    <div id="finale-overlay" class="fixed inset-0 bg-black flex items-center justify-center text-center p-4 z-[100]">
+        <h2 class="font-sedgwick text-5xl sm:text-7xl text-orange-500 animate-pulse">Essa é a nossa Última Dança!</h2>
+    </div>
+
+
+    <!-- ========== FOOTER ========== --><footer class="bg-gray-950/50 border-t border-gray-700/50 mt-16">
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 text-center text-gray-500">
+            <p>&copy; 2025 - Aztecas Last Dance. Proposta para Cidade dos Anjos.</p>
+        </div>
+    </footer>
+
+    <!-- ========== SCRIPT ========== --><script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Animação de Scroll (Intersection Observer) ---
+            const sections = document.querySelectorAll('.fade-in-section');
+            const finaleOverlay = document.getElementById('finale-overlay'); // Pega o overlay final
+            // Removida a flag finaleTriggered
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // observer.unobserve(entry.target); // Descomente se quiser que a animação ocorra só uma vez por seção
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1 // 10% da seção visível
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- Menu Mobile ---
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openIcon = menuButton.querySelector('svg:first-child');
+            const closeIcon = menuButton.querySelector('svg:last-child');
+            
+            menuButton.addEventListener('click', () => {
+                const isMenuOpen = mobileMenu.classList.toggle('hidden');
+                openIcon.classList.toggle('hidden', !isMenuOpen);
+                closeIcon.classList.toggle('hidden', isMenuOpen);
+            });
+
+            // --- Fechar Menu Mobile ao clicar no link ---
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    openIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                });
+            });
+
+            // --- Detecção de Scroll para o Efeito Final (Modificado) ---
+            window.addEventListener('scroll', () => {
+                // Ajuste o valor '100' se quiser que o fade apareça um pouco antes/depois
+                const nearBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 100); 
+
+                if (nearBottom) {
+                    finaleOverlay.classList.add('show-finale'); // Mostra ao chegar perto do fim
+                } else {
+                    finaleOverlay.classList.remove('show-finale'); // Esconde ao rolar para cima
+                }
+            });
+
+            // --- Removido o Evento de Clique para Fechar o Overlay ---
+
+        });
+    </script>
+
+</body>
+</html>
